@@ -33,13 +33,24 @@
             <div class="loader-orb orb-3"></div>
             <div class="loader-core">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <polygon points="24,4 44,14 44,34 24,44 4,34 4,14" stroke="url(#hex-grad)" stroke-width="1.5" fill="none"/>
-                    <polygon points="24,10 38,18 38,30 24,38 10,30 10,18" stroke="url(#hex-grad)" stroke-width="1" fill="none" opacity="0.4"/>
-                    <circle cx="24" cy="24" r="4" fill="url(#hex-grad)"/>
+                    <!-- Simplified geometric design inspired by dunjane-faveicon.svg -->
+                    <g transform="translate(24,24)">
+                        <!-- Central hexagon -->
+                        <polygon points="0,-8 7,-4 7,4 0,8 -7,4 -7,-4" stroke="url(#loader-grad)" stroke-width="2" fill="none"/>
+                        <!-- Outer rings -->
+                        <circle cx="0" cy="0" r="12" stroke="url(#loader-grad)" stroke-width="1" fill="none" opacity="0.6"/>
+                        <circle cx="0" cy="0" r="16" stroke="url(#loader-grad)" stroke-width="1" fill="none" opacity="0.4"/>
+                        <!-- Corner accents -->
+                        <circle cx="7" cy="-4" r="2" fill="url(#loader-grad)"/>
+                        <circle cx="-7" cy="4" r="2" fill="url(#loader-grad)"/>
+                        <circle cx="7" cy="4" r="2" fill="url(#loader-grad)"/>
+                        <circle cx="-7" cy="-4" r="2" fill="url(#loader-grad)"/>
+                    </g>
                     <defs>
-                        <linearGradient id="hex-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                        <linearGradient id="loader-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
                             <stop offset="0%" stop-color="#a78bfa"/>
-                            <stop offset="100%" stop-color="#38bdf8"/>
+                            <stop offset="50%" stop-color="#38bdf8"/>
+                            <stop offset="100%" stop-color="#f59e0b"/>
                         </linearGradient>
                     </defs>
                 </svg>
