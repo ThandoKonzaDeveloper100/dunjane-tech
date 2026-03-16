@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUNJANE STUDIO | Creative Technology</title>
+    <meta name="description" content="High-end web development, mobile apps, and visual design systems. We build the digital future for your brand.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,600;0,14..32,800;0,14..32,900;1,14..32,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .studio-hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(180deg, rgba(212,255,0,0.03) 0%, transparent 100%);
+            text-align: center;
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            padding: 80px 0;
+        }
+        .portfolio-item {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            background: #151515;
+            cursor: pointer;
+        }
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.05);
+        }
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        .portfolio-tag {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .studio-services {
+            padding: 120px 0;
+            background: #0a0a0a;
+        }
+    </style>
+</head>
+
+<body class="studio-page">
+
+    <!-- Cursor elements -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- Header -->
+    <header class="header scrolled" id="header">
+        <div class="nav-inner">
+            <a href="index.html" class="logo-link">
+                <div class="logo-container">  
+                    <span class="logo-text">DUNJANE<img src="img/GOLD DUNJANE LOGO with hologram.svg" alt="DUNJANE.TECH" class="logo-img">TECH</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="store.html" class="nav-link">Store</a>
+                <a href="studio.html" class="nav-link section-active">Studio</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-right">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="index.html#contact" class="btn-nav">Work With Us</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="studio-hero">
+        <div class="section-container">
+            <div class="section-label" data-anim="fade-up">/ THE STUDIO</div>
+            <h1 class="hero-title" data-anim="clip-up" data-delay="2">Crafting <span class="hero-title-accent">Elite</span><br>Digital Experiences</h1>
+            <p class="section-sub" data-anim="fade-up" data-delay="3">We combine technical precision with creative flair to build <br>products that define categories.</p>
+        </div>
+    </section>
+
+    <main class="portfolio-section">
+        <div class="section-container">
+            <div class="portfolio-grid">
+                
+                <article class="portfolio-item" data-anim="scale-up">
+                    <img src="/C:/Users/My PC/.gemini/antigravity/brain/02f70454-7549-4a3b-9be2-95800018cb56/studio_portfolio_ui_1773314579900.png" alt="UX System" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-tag">UI/UX Design</span>
+                        <h3>Nexus OS Dashboard</h3>
+                    </div>
+                </article>
+
+                <article class="portfolio-item" data-anim="scale-up" data-delay="2">
+                    <img src="/C:/Users/My PC/.gemini/antigravity/brain/02f70454-7549-4a3b-9be2-95800018cb56/studio_portfolio_3d_1773314596096.png" alt="3D Render" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-tag">3D Visuals</span>
+                        <h3>Liquid Chronograph</h3>
+                    </div>
+                </article>
+
+                <article class="portfolio-item" data-anim="scale-up">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&q=80&w=900" alt="Web App" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-tag">Web App</span>
+                        <h3>CryptoYield Terminal</h3>
+                    </div>
+                </article>
+
+                <article class="portfolio-item" data-anim="scale-up" data-delay="2">
+                    <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=900" alt="Branding" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-tag">Branding</span>
+                        <h3>Vector Global Identity</h3>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <section class="studio-services">
+        <div class="section-container">
+            <div class="section-head">
+                <div class="section-label" data-anim="fade-left">/ CAPABILITIES</div>
+                <h2 class="section-title" data-anim="fade-up">Full Stack <br><span class="accent-text">Creative</span> Power</h2>
+            </div>
+            
+            <div class="services-bento">
+                <div class="service-card" data-anim="scale-up">
+                    <h3>High-End Web</h3>
+                    <p>Next.js, Three.js, and custom shaders for experiences that stand out.</p>
+                </div>
+                <div class="service-card" data-anim="scale-up" data-delay="2">
+                    <h3>Mobile Innovation</h3>
+                    <p>Fluid animations and native performance for iOS and Android.</p>
+                </div>
+                <div class="service-card" data-anim="scale-up" data-delay="3">
+                    <h3>3D & Motion</h3>
+                    <p>Spline, Cinema4D, and Blender integrated into the web.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer same as index -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-bottom">
+                <p class="footer-copy">© 2026 DUNJANE TECH. BUILT DIFFERENT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function initStudio() {
+        var lastY = window.scrollY, dir = 'down';
+        window.addEventListener('scroll', function() {
+            var curr = window.scrollY;
+            if (Math.abs(curr - lastY) < 5) return;
+            dir = curr > lastY ? 'down' : 'up';
+            lastY = curr;
+            document.body.setAttribute('data-scroll-dir', dir);
+        }, { passive: true });
+
+        var animObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    entry.target.setAttribute('data-scroll-entry', dir);
+                } else {
+                    var rect = entry.boundingClientRect;
+                    if (rect.top > window.innerHeight || rect.bottom < 0) entry.target.classList.remove('in-view');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+
+        document.querySelectorAll('[data-anim], .service-card, .portfolio-item').forEach(function(el) {
+            animObserver.observe(el);
+        });
+
+        // Cursor
+        // ━━━ Custom Cursor ━━━
+        var dot = document.getElementById('cursor-dot'), ring = document.getElementById('cursor-ring');
+        if (dot && ring && window.matchMedia('(pointer:fine)').matches) {
+            var mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+            function lerp() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(lerp); }
+            lerp();
+            document.querySelectorAll('a, button, .portfolio-item').forEach(function(el) {
+                el.addEventListener('mouseenter', function() { ring.style.width = '56px'; ring.style.height = '56px'; dot.style.opacity = '0'; });
+                el.addEventListener('mouseleave', function() { ring.style.width = '36px'; ring.style.height = '36px'; dot.style.opacity = '1'; });
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

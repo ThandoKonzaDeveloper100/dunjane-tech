@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUNJANE CRM | Command Center</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,600;0,14..32,800;0,14..32,900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --crm-sidebar: 280px;
+            --crm-bg: #080808;
+            --crm-card: #121212;
+            --crm-border: rgba(255,255,255,0.06);
+            --bg: #080808;
+            --text: #f4f4f0;
+            --text-muted: rgba(255,255,255,0.5);
+            --text-dim: rgba(255,255,255,0.3);
+            --accent: #d4ff00;
+            --accent-dim: rgba(212,255,0,0.12);
+        }
+
+        html[data-theme="light"] {
+            --crm-bg: #ffffff;
+            --crm-card: #f5f5f5;
+            --crm-border: rgba(0,0,0,0.08);
+            --bg: #ffffff;
+            --text: #0a0a0a;
+            --text-muted: rgba(0,0,0,0.5);
+            --text-dim: rgba(0,0,0,0.3);
+            --accent: #b8d800;
+            --accent-dim: rgba(184,216,0,0.12);
+        }
+
+        html {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body { background: var(--crm-bg); display: flex; min-height: 100vh; }
+        
+        /* Sidebar */
+        .crm-sidebar {
+            width: var(--crm-sidebar);
+            border-right: 1px solid var(--crm-border);
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+        .crm-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+        .crm-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1.25rem;
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .crm-nav-link:hover { background: rgba(255,255,255,0.03); color: var(--text); }
+        .crm-nav-link.active { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(212,255,0,0.2); }
+
+        /* Main Content */
+        .crm-main { flex: 1; padding: 2.5rem 3.5rem; }
+        
+        .crm-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; }
+        .crm-header-text h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+        .crm-header-text p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Stats Grid */
+        .crm-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+        .crm-stat-card {
+            background: var(--crm-card);
+            border: 1px solid var(--crm-border);
+            border-radius: 20px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .stat-meta { display: flex; justify-content: space-between; align-items: center; }
+        .stat-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.04); border-radius: 8px; display: grid; place-items: center; font-size: 14px; }
+        .stat-trend { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+        .stat-val { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; }
+        .stat-lbl { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; }
+
+        /* Tables */
+        .crm-section { margin-bottom: 4rem; }
+        .crm-section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem; }
+        .crm-section-head h2 { font-size: 1.25rem; font-weight: 800; }
+        
+        .crm-table-wrap { background: var(--crm-card); border: 1px solid var(--crm-border); border-radius: 20px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { padding: 1.25rem 1.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--crm-border); color: var(--text-muted); }
+        td { padding: 1.25rem 1.5rem; font-size: 0.9rem; border-bottom: 1px solid var(--crm-border); }
+        tr:last-child td { border-bottom: none; }
+        
+        .status-pill { padding: 0.3rem 0.7rem; border-radius: 100px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+        .status-pill.lead { background: rgba(56,189,248,0.12); color: #38bdf8; }
+        .status-pill.won { background: var(--accent-dim); color: var(--accent); }
+        .status-pill.pending { background: rgba(167,139,250,0.12); color: #a78bfa; }
+
+        .btn-simulate { 
+            background: var(--accent); color: #000; font-weight: 800; font-size: 0.8rem; 
+            padding: 0.8rem 1.2rem; border-radius: 100px; border: none; cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .btn-simulate:active { transform: scale(0.95); }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--crm-card);
+            border: 1px solid var(--crm-border);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            overflow: hidden;
+        }
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        .modal-form::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-form::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .modal-form::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+        }
+        .modal-form::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .modal-preview {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--crm-border);
+            border-radius: 16px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .preview-card {
+            width: 100%;
+            max-width: 280px;
+            background: var(--crm-card);
+            border: 1px solid var(--crm-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .preview-img-wrap {
+            width: 100%;
+            height: 180px;
+            background: rgba(255,255,255,0.05);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .preview-body {
+            padding: 1rem;
+        }
+        .preview-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+        .preview-sku {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-family: var(--mono);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+        .preview-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .preview-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--crm-border);
+        }
+        .preview-detail-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .preview-detail-value {
+            font-weight: 600;
+        }
+        .preview-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-top: 1rem;
+        }
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--crm-border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(212,255,0,0.05);
+        }
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            flex: 1;
+        }
+        .btn-primary:hover { transform: scale(1.02); }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid var(--crm-border);
+            color: var(--text);
+            padding: 0.9rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        .btn-cancel:hover { background: rgba(255,255,255,0.05); }
+
+        /* Product Image Styles */
+        .product-thumbnail {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--crm-border);
+        }
+
+        /* File Input Styles */
+        .file-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+        }
+        #product-image-file {
+            display: none;
+        }
+        .btn-file-upload {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--crm-border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        .btn-file-upload:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--accent);
+        }
+        .file-name {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--crm-border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--text-muted);
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .form-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1rem 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .form-group select option {
+            background: var(--crm-bg);
+            color: var(--text);
+        }
+        .form-group select option:checked {
+            background: var(--accent);
+            color: #000;
+        }
+    </style>
+</head>
+
+<body class="crm-page">
+    
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <aside class="crm-sidebar">
+        <div class="logo">DUNJANE<span class="accent-dot">.</span>CRM</div>
+        <nav class="crm-nav">
+            <a href="#" class="crm-nav-link active" onclick="window.switchTab(event, 'dashboard')"><span>📊</span> Dashboard</a>
+            <a href="#" class="crm-nav-link" onclick="window.switchTab(event, 'leads')"><span>🧊</span> Leads</a>
+            <a href="#" class="crm-nav-link" onclick="window.switchTab(event, 'orders')"><span>📦</span> Orders</a>
+            <a href="#" class="crm-nav-link" onclick="window.switchTab(event, 'studio')"><span>🎨</span> Studio Projects</a>
+            <a href="#" class="crm-nav-link" onclick="window.switchTab(event, 'products')"><span>🛍️</span> Products</a>
+            <div style="margin-top: 2rem; height: 1px; background: var(--crm-border);"></div>
+            <a href="index.html" class="crm-nav-link"><span>←</span> View Website</a>
+        </nav>
+        <div style="margin-top: auto; color: var(--text-dim); font-size: 0.65rem; font-family: var(--mono);">
+            V 1.0.4-BETA // NODE-01
+        </div>
+    </aside>
+
+    <main class="crm-main">
+        <header class="crm-header">
+            <div class="crm-header-text">
+                <p id="crm-date">MARCH 12, 2026</p>
+                <h1>Command Center</h1>
+            </div>
+            <div class="crm-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" style="width: 44px; height: 44px; background: transparent; border: 1px solid var(--crm-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); margin-right: 1rem;">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="btn-simulate" id="simulate-lead">Simulate New Lead</button>
+                <button class="btn-ghost" style="padding: 0.8rem 1.2rem; margin-left:1rem;" id="export-csv">Export CSV</button>
+            </div>
+        </header>
+
+        <div class="crm-stats-grid">
+            <div class="crm-stat-card">
+                <div class="stat-meta"><span class="stat-icon">💰</span> <span class="stat-trend">+14%</span></div>
+                <div class="stat-val" id="stat-revenue">$14.2k</div>
+                <div class="stat-lbl">Monthly Revenue</div>
+            </div>
+            <div class="crm-stat-card">
+                <div class="stat-meta"><span class="stat-icon">🎯</span> <span class="stat-trend">+8%</span></div>
+                <div class="stat-val" id="stat-leads">42</div>
+                <div class="stat-lbl">Active Leads</div>
+            </div>
+            <div class="crm-stat-card">
+                <div class="stat-meta"><span class="stat-icon">📦</span> <span class="stat-trend">+22%</span></div>
+                <div class="stat-val" id="stat-orders">18</div>
+                <div class="stat-lbl">Open Orders</div>
+            </div>
+            <div class="crm-stat-card" style="border-color: rgba(212,255,0,0.3);">
+                <div class="stat-meta"><span class="stat-icon">✨</span> <span class="stat-trend">STABLE</span></div>
+                <div class="stat-val">98%</div>
+                <div class="stat-lbl">Client Satisfaction</div>
+            </div>
+        </div>
+
+        <section class="crm-section" id="activity-section">
+            <div class="crm-section-head">
+                <h2>Recent Activity</h2>
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--mono);">LATEST 10 ENTRIES</div>
+            </div>
+            <div class="crm-table-wrap">
+                <table id="activity-table">
+                    <thead>
+                        <tr>
+                            <th>Contact / Item</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Value</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="crm-body">
+                        <!-- Data injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="crm-section" id="leads-section" style="display: none;">
+            <div class="crm-section-head">
+                <h2>Leads</h2>
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--mono);">ALL LEADS</div>
+            </div>
+            <div class="crm-table-wrap">
+                <table id="leads-table">
+                    <thead>
+                        <tr>
+                            <th style="cursor:pointer" onclick="window.sortTable('leads', 'name')">Contact Name</th>
+                            <th>Email</th>
+                            <th>Interest</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leads-body">
+                        <!-- Leads data injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="crm-section" id="orders-section" style="display: none;">
+            <div class="crm-section-head">
+                <h2>Orders</h2>
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--mono);">ALL ORDERS</div>
+            </div>
+            <div class="crm-table-wrap">
+                <table id="orders-table">
+                    <thead>
+                        <tr>
+                            <th style="cursor:pointer" onclick="window.sortTable('orders', 'name')">Product / Item</th>
+                            <th>Category</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('orders', 'val')">Value</th>
+                            <th>Status</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('orders', 'date')">Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-body">
+                        <!-- Orders data injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="crm-section" id="studio-section" style="display: none;">
+            <div class="crm-section-head">
+                <h2>Studio Projects</h2>
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--mono);">ALL PROJECTS</div>
+            </div>
+            <div class="crm-table-wrap">
+                <table id="studio-table">
+                    <thead>
+                        <tr>
+                            <th style="cursor:pointer" onclick="window.sortTable('studio', 'name')">Project Name</th>
+                            <th>Client</th>
+                            <th>Type</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('studio', 'val')">Value</th>
+                            <th>Status</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('studio', 'date')">Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studio-body">
+                        <!-- Studio projects data injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="crm-section" id="products-section" style="display: none;">
+            <div class="crm-section-head">
+                <h2>Product Inventory</h2>
+                <div style="display: flex; gap: 1rem;">
+                    <input type="text" id="product-search" placeholder="🔍 Search products..." style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--crm-border); border-radius: 12px; padding: 0.75rem 1rem; color: var(--text); font-size: 0.9rem;">
+                    <select id="category-filter" style="background: rgba(255,255,255,0.05); border: 1px solid var(--crm-border); border-radius: 12px; padding: 0.75rem 1rem; color: var(--text); font-size: 0.9rem;">
+                        <option value="">All Categories</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="iPhone">iPhone</option>
+                        <option value="Android">Android</option>
+                    </select>
+                    <button class="btn-ghost" id="export-products-btn" style="padding: 0.75rem 1.2rem; font-size: 0.85rem;">📥 Export</button>
+                    <button class="btn-simulate" id="add-product-btn">+ Add Product</button>
+                </div>
+            </div>
+            <div class="crm-table-wrap">
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th style="cursor:pointer" onclick="window.sortTable('products', 'image')">Image</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('products', 'name')">Product Name</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('products', 'sku')">SKU</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('products', 'price')">Price</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('products', 'stock')">Stock</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('products', 'category')">Category</th>
+                            <th style="cursor:pointer" onclick="window.sortTable('products', 'created')">Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-body">
+                        <!-- Products injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add Product Modal -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal-content">
+            <div class="modal-form">
+                <div class="modal-header">Add New Product</div>
+                <form id="product-form">
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" id="product-name" placeholder="e.g., MacBook Pro M2" required>
+                    </div>
+                    <div class="form-group">
+                        <label>SKU</label>
+                        <input type="text" id="product-sku" placeholder="e.g., APPLE-MB001" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" id="product-price" placeholder="e.g., 1299.99" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock Quantity</label>
+                        <input type="number" id="product-stock" placeholder="e.g., 50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="product-category" required>
+                            <option value="">Select a category...</option>
+                            <option value="Laptop">Laptop</option>
+                            <option value="iPhone">iPhone</option>
+                            <option value="Android">Android</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Condition</label>
+                        <select id="product-condition" required>
+                            <option value="">Select condition...</option>
+                            <option value="New">New</option>
+                            <option value="Pre-owned">Pre-owned</option>
+                            <option value="Refurbished">Refurbished</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Image</label>
+                        <div class="file-input-wrapper">
+                            <button type="button" class="btn-file-upload" id="product-file-btn">📁 Choose File</button>
+                            <div class="file-name" id="file-name">No file chosen</div>
+                        </div>
+                        <input type="file" id="product-image-file" accept="image/*">
+                    </div>
+                    <div class="form-divider">OR</div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="url" id="product-image" placeholder="e.g., https://images.unsplash.com/...">
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-primary">Add Product</button>
+                        <button type="button" class="btn-cancel" onclick="window.closeProductModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-preview">
+                <div class="preview-card">
+                    <div class="preview-img-wrap">
+                        <img id="preview-img" src="https://via.placeholder.com/280x180?text=Product+Image" alt="" class="preview-img">
+                    </div>
+                    <div class="preview-body">
+                        <div class="preview-name" id="preview-name">Your Product Name</div>
+                        <div class="preview-sku" id="preview-sku">SKU-XXXX</div>
+                        <div class="preview-details">
+                            <div class="preview-detail-row">
+                                <span class="preview-detail-label">Category</span>
+                                <span class="preview-detail-value" id="preview-category">Electronics</span>
+                            </div>
+                            <div class="preview-detail-row">
+                                <span class="preview-detail-label">Condition</span>
+                                <span class="preview-detail-value" id="preview-condition">New</span>
+                            </div>
+                            <div class="preview-detail-row">
+                                <span class="preview-detail-label">Stock</span>
+                                <span class="preview-detail-value" id="preview-stock">0</span>
+                            </div>
+                        </div>
+                        <div class="preview-price" id="preview-price">$0.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ═══════════════════════════════════════════════════════════════
+    //  CRM UTILITY FUNCTIONS
+    // ═══════════════════════════════════════════════════════════════
+    
+    var CRMState = {
+        currentEditId: null,
+        filteredProducts: [],
+        sortColumn: null,
+        sortDirection: 'asc',
+        currentTab: 'dashboard'
+    };
+
+    (function initCRM() {
+        // Define utility functions inside the function
+        window.switchTab = function(e, tab) {
+        e.preventDefault();
+        CRMState.currentTab = tab;
+        
+        // Update nav links - map tab to nav text
+        var tabNames = {
+            'dashboard': 'Dashboard',
+            'leads': 'Leads',
+            'orders': 'Orders',
+            'studio': 'Studio',
+            'products': 'Products'
+        };
+        
+        document.querySelectorAll('.crm-nav-link').forEach(link => {
+            var text = link.textContent.trim();
+            var isActive = text.includes(tabNames[tab]);
+            link.classList.toggle('active', isActive);
+        });
+        
+        // Hide all sections
+        document.getElementById('activity-section').style.display = 'none';
+        document.getElementById('leads-section').style.display = 'none';
+        document.getElementById('orders-section').style.display = 'none';
+        document.getElementById('studio-section').style.display = 'none';
+        document.getElementById('products-section').style.display = 'none';
+        
+        // Show selected section
+        switch(tab) {
+            case 'dashboard':
+                document.getElementById('activity-section').style.display = 'block';
+                window.render();
+                break;
+            case 'leads':
+                document.getElementById('leads-section').style.display = 'block';
+                window.renderLeads();
+                break;
+            case 'orders':
+                document.getElementById('orders-section').style.display = 'block';
+                window.renderOrders();
+                break;
+            case 'studio':
+                document.getElementById('studio-section').style.display = 'block';
+                window.renderStudio();
+                break;
+            case 'products':
+                document.getElementById('products-section').style.display = 'block';
+                window.renderProducts();
+                break;
+        }
+    };
+
+    window.renderLeads = function() {
+        var data = window.getData();
+        var leads = data.filter(item => item.status === 'lead');
+        var leadsBody = document.getElementById('leads-body');
+        leadsBody.innerHTML = '';
+        
+        leads.forEach(function(lead) {
+            var tr = document.createElement('tr');
+            tr.setAttribute('data-id', lead.id);
+            tr.innerHTML = ' \
+                <td><strong>' + lead.name + '</strong></td> \
+                <td>-</td> \
+                <td><span style="font-family: var(--mono); font-size: 0.75rem;">' + lead.category + '</span></td> \
+                <td><span class="status-pill lead">lead</span></td> \
+                <td style="color: var(--text-muted); font-size: 0.8rem;">' + lead.date + '</td> \
+                <td><button onclick="window.deleteEntry(' + lead.id + ')" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.6; transition:0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">🗑</button></td> \
+            ';
+            leadsBody.appendChild(tr);
+        });
+        
+        if (leads.length === 0) {
+            leadsBody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 2rem; color: var(--text-muted);">No leads yet</td></tr>';
+        }
+    };
+
+    window.renderOrders = function() {
+        var data = window.getData();
+        var orders = data.filter(item => item.category === 'Hardware Sale' || (item.status !== 'lead' && item.val !== '-'));
+        var ordersBody = document.getElementById('orders-body');
+        ordersBody.innerHTML = '';
+        
+        orders.forEach(function(order) {
+            var tr = document.createElement('tr');
+            tr.setAttribute('data-id', order.id);
+            tr.innerHTML = ' \
+                <td><strong>' + order.name + '</strong></td> \
+                <td><span style="font-family: var(--mono); font-size: 0.75rem;">' + order.category + '</span></td> \
+                <td>' + order.val + '</td> \
+                <td><span class="status-pill ' + order.status + '" style="cursor:pointer" onclick="window.cycleStatus(' + order.id + ')">' + order.status + '</span></td> \
+                <td style="color: var(--text-muted); font-size: 0.8rem;">' + order.date + '</td> \
+                <td><button onclick="window.deleteEntry(' + order.id + ')" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.6; transition:0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">🗑</button></td> \
+            ';
+            ordersBody.appendChild(tr);
+        });
+        
+        if (orders.length === 0) {
+            ordersBody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 2rem; color: var(--text-muted);">No orders yet</td></tr>';
+        }
+    };
+
+    window.renderStudio = function() {
+        var data = window.getData();
+        var projects = data.filter(item => item.category === 'Studio Project');
+        var studioBody = document.getElementById('studio-body');
+        studioBody.innerHTML = '';
+        
+        projects.forEach(function(project) {
+            var tr = document.createElement('tr');
+            tr.setAttribute('data-id', project.id);
+            tr.innerHTML = ' \
+                <td><strong>' + project.name + '</strong></td> \
+                <td>-</td> \
+                <td>Web Development</td> \
+                <td>' + project.val + '</td> \
+                <td><span class="status-pill ' + project.status + '" style="cursor:pointer" onclick="window.cycleStatus(' + project.id + ')">' + project.status + '</span></td> \
+                <td style="color: var(--text-muted); font-size: 0.8rem;">' + project.date + '</td> \
+                <td><button onclick="window.deleteEntry(' + project.id + ')" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.6; transition:0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">🗑</button></td> \
+            ';
+            studioBody.appendChild(tr);
+        });
+        
+        if (projects.length === 0) {
+            studioBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 2rem; color: var(--text-muted);">No studio projects yet</td></tr>';
+        }
+    };
+
+    window.sortTable = function(type, column) {
+        CRMState.sortColumn = column;
+        CRMState.sortDirection = CRMState.sortDirection === 'asc' ? 'desc' : 'asc';
+        
+        switch(type) {
+            case 'products':
+                window.renderProducts();
+                break;
+            case 'leads':
+                window.renderLeads();
+                break;
+            case 'orders':
+                window.renderOrders();
+                break;
+            case 'studio':
+                window.renderStudio();
+                break;
+        }
+    };
+
+    window.filterProducts = function() {
+        var searchTerm = document.getElementById('product-search')?.value?.toLowerCase() || '';
+        var categoryFilter = document.getElementById('category-filter')?.value || '';
+        var products = window.getProducts();
+        
+        window.CRMState.filteredProducts = products.filter(function(p) {
+            var matchesSearch = !searchTerm || 
+                p.name.toLowerCase().includes(searchTerm) || 
+                p.sku.toLowerCase().includes(searchTerm);
+            var matchesCategory = !categoryFilter || p.category === categoryFilter;
+            return matchesSearch && matchesCategory;
+        });
+        
+        window.renderProducts();
+    };
+
+    window.editProduct = function(id) {
+        var products = window.getProducts();
+        var product = products.find(p => p.id === id);
+        if (!product) return;
+        
+        CRMState.currentEditId = id;
+        document.getElementById('product-name').value = product.name;
+        document.getElementById('product-sku').value = product.sku;
+        document.getElementById('product-price').value = product.price;
+        document.getElementById('product-stock').value = product.stock;
+        document.getElementById('product-category').value = product.category;
+        document.getElementById('product-condition').value = product.condition;
+        document.getElementById('product-image').value = product.image;
+        
+        document.querySelector('.modal-header').textContent = 'Edit Product';
+        document.querySelector('.btn-primary').textContent = 'Update Product';
+        document.getElementById('product-modal').classList.add('active');
+        window.updatePreview();
+    };
+
+    window.duplicateProduct = function(id) {
+        var products = window.getProducts();
+        var product = products.find(p => p.id === id);
+        if (!product) return;
+        
+        var newProduct = {
+            id: Date.now(),
+            name: product.name + ' (Copy)',
+            sku: product.sku + '-COPY',
+            price: product.price,
+            stock: Math.floor(product.stock / 2),
+            category: product.category,
+            condition: product.condition,
+            image: product.image,
+            created: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        };
+        
+        products.unshift(newProduct);
+        window.setProducts(products);
+        window.renderProducts();
+        
+        var notification = document.createElement('div');
+        notification.style.cssText = 'position:fixed;top:20px;right:20px;background:var(--accent);color:#000;padding:1rem 1.5rem;border-radius:12px;font-weight:800;z-index:9999;animation:slideIn 0.3s ease;';
+        notification.textContent = '✓ Product duplicated successfully';
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    };
+
+    window.getProductStats = function() {
+        var products = window.getProducts();
+        var stats = {
+            total: products.length,
+            byCategory: {},
+            lowStock: [],
+            totalValue: 0
+        };
+        
+        products.forEach(function(p) {
+            stats.byCategory[p.category] = (stats.byCategory[p.category] || 0) + 1;
+            stats.totalValue += parseFloat(p.price) * p.stock;
+            if (p.stock < 10) stats.lowStock.push(p);
+        });
+        
+        return stats;
+    };
+
+    window.exportProducts = function() {
+        var products = window.getProducts();
+        var csv = "ID,Product Name,SKU,Price,Stock,Category,Condition,Created\n";
+        products.forEach(p => {
+            csv += p.id + ",\"" + p.name + "\"," + p.sku + "," + p.price + "," + p.stock + "," + p.category + "," + p.condition + "," + p.created + "\n";
+        });
+        var blob = new Blob([csv], { type: 'text/csv' });
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'dunjane_products_export.csv';
+        a.click();
+    };
+
+    window.updateProductStock = function(id, newStock) {
+        var products = window.getProducts();
+        var product = products.find(p => p.id === id);
+        if (product) {
+            product.stock = Math.max(0, newStock);
+            window.setProducts(products);
+            window.renderProducts();
+        }
+    };
+
+    window.bulkUpdateCategory = function(oldCategory, newCategory) {
+        var products = window.getProducts();
+        var updated = 0;
+        products.forEach(function(p) {
+            if (p.category === oldCategory) {
+                p.category = newCategory;
+                updated++;
+            }
+        });
+        if (updated > 0) {
+            window.setProducts(products);
+            window.renderProducts();
+            alert('Updated ' + updated + ' products');
+        }
+    };
+
+    window.getProductsByCategory = function(category) {
+        return window.getProducts().filter(p => p.category === category);
+    };
+
+    window.getLowStockProducts = function(threshold) {
+        threshold = threshold || 15;
+        return window.getProducts().filter(p => p.stock < threshold);
+    };
+
+    window.searchProducts = function(query) {
+        var products = window.getProducts();
+        return products.filter(p => 
+            p.name.toLowerCase().includes(query.toLowerCase()) ||
+            p.sku.toLowerCase().includes(query.toLowerCase())
+        );
+    };
+
+    // ═══════════════════════════════════════════════════════════════
+    //  CRM CORE INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════
+    
+        var crmBody = document.getElementById('crm-body');
+        var simulateBtn = document.getElementById('simulate-lead');
+        var exportBtn = document.getElementById('export-csv');
+        var dateEl = document.getElementById('crm-date');
+        var productsSection = document.getElementById('products-section');
+        var productsBody = document.getElementById('products-body');
+        var addProductBtn = document.getElementById('add-product-btn');
+        var productForm = document.getElementById('product-form');
+        var productModal = document.getElementById('product-modal');
+
+        // Status Cycle Config
+        var statusCycle = { 'lead': 'won', 'won': 'pending', 'pending': 'shipped', 'shipped': 'lead' };
+
+        // Set Date
+        var now = new Date();
+        dateEl.textContent = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+
+        // Default Data
+        var defaultData = [
+            { id: 1, name: "Sarah Connor", category: "Studio Project", status: "won", val: "$4,500", date: "2m ago" },
+            { id: 2, name: "MacBook Pro M2", category: "Hardware Sale", status: "pending", val: "$1,299", date: "15m ago" },
+            { id: 3, name: "Marcus Wright", category: "Lead", status: "lead", val: "-", date: "1h ago" }
+        ];
+
+        var defaultProducts = [
+            { id: 101, name: "MacBook Pro M2", sku: "APPLE-MB001", price: "1,299.99", stock: 12, category: "Laptop", created: "Jan 2, 2026", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=200" },
+            { id: 102, name: "iPhone 16 Pro", sku: "APPLE-IP001", price: "1,099.99", stock: 45, category: "iPhone", created: "Jan 1, 2026", image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=200" },
+            { id: 103, name: "Samsung Galaxy S25", sku: "SAMSUNG-S25", price: "1,299.99", stock: 28, category: "Android", created: "Dec 28, 2025", image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&q=80&w=200" }
+        ];
+
+        function getData() { return JSON.parse(localStorage.getItem('dunjane_crm_data')) || defaultData; }
+        function setData(data) { localStorage.setItem('dunjane_crm_data', JSON.stringify(data)); }
+        
+        function getProducts() { return JSON.parse(localStorage.getItem('dunjane_products')) || defaultProducts; }
+        function setProducts(data) { localStorage.setItem('dunjane_products', JSON.stringify(data)); }
+
+        // Expose to window for use in external functions
+        window.getData = getData;
+        window.setData = setData;
+        window.getProducts = getProducts;
+        window.setProducts = setProducts;
+
+        function render() {
+            var crmData = getData();
+            crmBody.innerHTML = '';
+            crmData.forEach(function(item) {
+                var tr = document.createElement('tr');
+                tr.setAttribute('data-id', item.id);
+                tr.innerHTML = ' \
+                    <td><strong>' + item.name + '</strong></td> \
+                    <td><span style="font-family: var(--mono); font-size: 0.75rem;">' + item.category + '</span></td> \
+                    <td><span class="status-pill ' + item.status + '" style="cursor:pointer" onclick="window.cycleStatus(' + item.id + ')">' + item.status + '</span></td> \
+                    <td>' + item.val + '</td> \
+                    <td style="color: var(--text-muted); font-size: 0.8rem;">' + item.date + '</td> \
+                    <td><button onclick="window.deleteEntry(' + item.id + ')" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.6; transition:0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">🗑</button></td> \
+                ';
+                crmBody.appendChild(tr);
+            });
+            updateStats(crmData);
+        }
+
+        function renderProducts() {
+            var products = CRMState.filteredProducts.length > 0 ? CRMState.filteredProducts : getProducts();
+            
+            // Apply sorting
+            if (CRMState.sortColumn) {
+                products = products.slice().sort(function(a, b) {
+                    var aVal = a[CRMState.sortColumn];
+                    var bVal = b[CRMState.sortColumn];
+                    
+                    if (typeof aVal === 'string') {
+                        aVal = aVal.toLowerCase();
+                        bVal = bVal.toLowerCase();
+                    } else if (typeof aVal === 'number') {
+                        aVal = parseFloat(aVal);
+                        bVal = parseFloat(bVal);
+                    }
+                    
+                    if (aVal < bVal) return CRMState.sortDirection === 'asc' ? -1 : 1;
+                    if (aVal > bVal) return CRMState.sortDirection === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            }
+            
+            productsBody.innerHTML = '';
+            products.forEach(function(product) {
+                var tr = document.createElement('tr');
+                tr.setAttribute('data-id', product.id);
+                var stockColor = product.stock > 20 ? 'rgba(212,255,0,0.12)' : product.stock > 10 ? 'rgba(167,139,250,0.12)' : 'rgba(255,107,107,0.12)';
+                tr.innerHTML = ' \
+                    <td><img src="' + (product.image || 'https://via.placeholder.com/48?text=No+Image') + '" alt="' + product.name + '" class="product-thumbnail"></td> \
+                    <td><strong>' + product.name + '</strong></td> \
+                    <td><span style="font-family: var(--mono); font-size: 0.75rem;">' + product.sku + '</span></td> \
+                    <td>$' + product.price + '</td> \
+                    <td><span style="background: ' + stockColor + '; padding: 0.3rem 0.7rem; border-radius: 100px; font-weight: 600;">' + product.stock + '</span></td> \
+                    <td><span style="font-family: var(--mono); font-size: 0.75rem;">' + product.category + '</span></td> \
+                    <td style="color: var(--text-muted); font-size: 0.8rem;">' + product.created + '</td> \
+                    <td> \
+                        <button onclick="window.editProduct(' + product.id + ')" style="background:none; border:none; color:var(--accent); cursor:pointer; font-size:14px; opacity:0.6; transition:0.3s; margin-right:0.5rem;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6" title="Edit">✎</button> \
+                        <button onclick="window.duplicateProduct(' + product.id + ')" style="background:none; border:none; color:#a78bfa; cursor:pointer; font-size:14px; opacity:0.6; transition:0.3s; margin-right:0.5rem;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6" title="Duplicate">⬚</button> \
+                        <button onclick="window.deleteProduct(' + product.id + ')" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:14px; opacity:0.6; transition:0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6" title="Delete">🗑</button> \
+                    </td> \
+                ';
+                productsBody.appendChild(tr);
+            });
+        }
+
+        function updateStats(data) {
+            document.getElementById('stat-leads').textContent = data.filter(i => i.status === 'lead').length;
+            document.getElementById('stat-orders').textContent = data.filter(i => i.category === 'Hardware Sale').length;
+            var rev = data.filter(i => i.status === 'won').reduce((acc, i) => acc + parseInt((i.val || "$0").replace(/[^0-9]/g, "")) || 0, 0);
+            document.getElementById('stat-revenue').textContent = '$' + (rev / 1000).toFixed(1) + 'k';
+        }
+
+        // Expose core functions to window
+        window.render = render;
+        window.renderProducts = renderProducts;
+        window.cycleStatus = function(id) {
+            var data = getData();
+            var item = data.find(i => i.id === id);
+            if (item) {
+                item.status = statusCycle[item.status] || 'lead';
+                setData(data);
+                render();
+            }
+        };
+
+        window.deleteEntry = function(id) {
+            if (!confirm('Delete this entry?')) return;
+            var data = getData().filter(i => i.id !== id);
+            setData(data);
+            render();
+        };
+
+        window.deleteProduct = function(id) {
+            if (!confirm('Delete this product?')) return;
+            var products = getProducts().filter(p => p.id !== id);
+            setProducts(products);
+            
+            // Notify any listening windows
+            try {
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'dunjane_products',
+                    newValue: JSON.stringify(products),
+                    storageArea: localStorage
+                }));
+            } catch(e) {}
+            
+            renderProducts();
+        };
+
+        window.switchToProducts = function(e) {
+            if (e) e.preventDefault();
+            window.switchTab({ preventDefault: function() {} }, 'products');
+        };
+
+        // File upload variables (declare early so they're available to closeProductModal)
+        var fileInput = document.getElementById('product-image-file');
+        var fileBtn = document.getElementById('product-file-btn');
+        var fileName = document.getElementById('file-name');
+        var urlInput = document.getElementById('product-image');
+
+        window.closeProductModal = function() {
+            productModal.classList.remove('active');
+            productForm.reset();
+            fileInput.value = '';
+            fileName.textContent = 'No file chosen';
+            document.querySelector('.modal-header').textContent = 'Add New Product';
+            document.querySelector('.btn-primary').textContent = 'Add Product';
+            CRMState.currentEditId = null;
+            updatePreview();
+        };
+
+        addProductBtn.addEventListener('click', function() {
+            productModal.classList.add('active');
+            updatePreview();
+        });
+
+        var exportProductsBtn = document.getElementById('export-products-btn');
+        if (exportProductsBtn) {
+            exportProductsBtn.addEventListener('click', window.exportProducts);
+        }
+
+        // File upload handler
+
+        fileBtn.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                fileName.textContent = file.name;
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    urlInput.value = event.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Real-time preview update
+        function updatePreview() {
+            var name = document.getElementById('product-name').value || 'Your Product Name';
+            var sku = document.getElementById('product-sku').value || 'SKU-XXXX';
+            var price = document.getElementById('product-price').value || '0.00';
+            var stock = document.getElementById('product-stock').value || '0';
+            var category = document.getElementById('product-category').value || 'Electronics';
+            var condition = document.getElementById('product-condition').value || 'New';
+            var image = document.getElementById('product-image').value || 'https://via.placeholder.com/280x180?text=Product+Image';
+            
+            document.getElementById('preview-name').textContent = name;
+            document.getElementById('preview-sku').textContent = sku;
+            document.getElementById('preview-price').textContent = '$' + parseFloat(price || 0).toFixed(2);
+            document.getElementById('preview-stock').textContent = stock;
+            document.getElementById('preview-category').textContent = category;
+            document.getElementById('preview-condition').textContent = condition;
+            document.getElementById('preview-img').src = image;
+        }
+
+        // Update preview on input change
+        document.getElementById('product-name').addEventListener('input', updatePreview);
+        document.getElementById('product-sku').addEventListener('input', updatePreview);
+        document.getElementById('product-price').addEventListener('input', updatePreview);
+        document.getElementById('product-stock').addEventListener('input', updatePreview);
+        document.getElementById('product-category').addEventListener('input', updatePreview);
+        document.getElementById('product-condition').addEventListener('input', updatePreview);
+        document.getElementById('product-image').addEventListener('input', updatePreview);
+
+        productForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var products = getProducts();
+            var productData = {
+                name: document.getElementById('product-name').value,
+                sku: document.getElementById('product-sku').value,
+                price: document.getElementById('product-price').value,
+                stock: parseInt(document.getElementById('product-stock').value),
+                category: document.getElementById('product-category').value,
+                condition: document.getElementById('product-condition').value,
+                image: document.getElementById('product-image').value
+            };
+            
+            if (CRMState.currentEditId) {
+                // Edit existing product
+                var productIndex = products.findIndex(p => p.id === CRMState.currentEditId);
+                if (productIndex !== -1) {
+                    products[productIndex] = {
+                        ...products[productIndex],
+                        ...productData
+                    };
+                }
+            } else {
+                // Add new product
+                var newProduct = {
+                    id: Date.now(),
+                    ...productData,
+                    created: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                };
+                products.unshift(newProduct);
+            }
+            
+            setProducts(products);
+            
+            // Notify any listening windows
+            try {
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'dunjane_products',
+                    newValue: JSON.stringify(products),
+                    storageArea: localStorage
+                }));
+            } catch(e) {}
+            
+            renderProducts();
+            window.closeProductModal();
+            addProductBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => { addProductBtn.style.transform = ''; }, 100);
+        });
+
+        // Close modal when clicking outside
+        productModal.addEventListener('click', function(e) {
+            if (e.target === productModal) {
+                window.closeProductModal();
+            }
+        });
+
+        // Initialize preview on modal open
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (productModal.classList.contains('active')) {
+                    updatePreview();
+                }
+            });
+        });
+        observer.observe(productModal, { attributes: true, attributeFilter: ['class'] });
+
+        // Add search and filter listeners
+        var searchInput = document.getElementById('product-search');
+        var categoryFilter = document.getElementById('category-filter');
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', window.filterProducts);
+        }
+        if (categoryFilter) {
+            categoryFilter.addEventListener('change', window.filterProducts);
+        }
+
+        simulateBtn.addEventListener('click', function() {
+            var names = ["Alex Rivera", "Samantha Bloom", "Derek Hale", "Elena Gilbert", "Tony Stark"];
+            var cats = ["Studio Project", "Hardware Sale", "Lead"];
+            var data = getData();
+            data.unshift({
+                id: Date.now(),
+                name: names[Math.floor(Math.random() * names.length)],
+                category: cats[Math.floor(Math.random() * cats.length)],
+                status: "lead",
+                val: cats[Math.floor(Math.random() * cats.length)] === "Hardware Sale" ? "$1,200" : "-",
+                date: "Just now"
+            });
+            if (data.length > 20) data.pop();
+            setData(data);
+            render();
+            simulateBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => { simulateBtn.style.transform = ''; }, 100);
+        });
+
+        exportBtn.addEventListener('click', function() {
+            var data = getData();
+            var csv = "ID,Name,Category,Status,Value,Date\n";
+            data.forEach(i => { csv += i.id + "," + i.name + "," + i.category + "," + i.status + "," + (i.val || "-") + "," + i.date + "\n"; });
+            var blob = new Blob([csv], { type: 'text/csv' });
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url; a.download = 'dunjane_crm_export.csv'; a.click();
+        });
+
+        // Live Sync
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'dunjane_crm_data') render();
+            if (e.key === 'dunjane_products') renderProducts();
+        });
+
+        render();
+
+        // Theme Toggle
+        var themeToggle = document.getElementById('theme-toggle');
+        var htmlEl = document.documentElement;
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var savedTheme = localStorage.getItem('dunjane-theme');
+        var currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        
+        function setTheme(theme) {
+            htmlEl.setAttribute('data-theme', theme);
+            localStorage.setItem('dunjane-theme', theme);
+            if (themeToggle) {
+                var sunIcon = themeToggle.querySelector('.sun-icon');
+                var moonIcon = themeToggle.querySelector('.moon-icon');
+                if (theme === 'light') {
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                } else {
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                }
+            }
+        }
+        
+        setTheme(currentTheme);
+        
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                currentTheme = newTheme;
+                setTheme(newTheme);
+            });
+        }
+
+        // Custom Cursor
+        var dot = document.getElementById('cursor-dot'), ring = document.getElementById('cursor-ring');
+        if (dot && ring) {
+            var mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+            function lerp() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(lerp); }
+            lerp();
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUNJANE STORE | Hardware & Tech</title>
+    <meta name="description" content="Premium new and pre-owned laptops, phones, and tablets. Quality tech hardware for creators.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,600;0,14..32,800;0,14..32,900;1,14..32,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .store-hero {
+            padding: 160px 0 80px;
+            background: radial-gradient(circle at top right, rgba(212,255,0,0.05), transparent 60%);
+            text-align: center;
+        }
+        .filter-bar {
+            position: sticky;
+            top: 76px;
+            z-index: 90;
+            background: rgba(10,10,10,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 16px 0;
+            margin-bottom: 40px;
+        }
+        .filter-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        .filter-group {
+            display: flex;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 100px;
+            padding: 4px;
+        }
+        .filter-btn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            color: #000;
+        }
+        .store-grid-wrap {
+            padding-bottom: 120px;
+        }
+        .category-label {
+            display: block;
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(212,255,0,0.2);
+            padding-bottom: 12px;
+        }
+        .product-card[data-condition="new"] .tag-condition { background: var(--accent); color: #000; }
+        .product-card[data-condition="pre-owned"] .tag-condition { background: rgba(255,255,255,0.1); color: #fff; }
+    </style>
+</head>
+
+<body class="store-page">
+
+    <!-- Cursor elements -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- Header -->
+    <header class="header scrolled" id="header">
+        <div class="nav-inner">
+            <a href="index.html" class="logo-link">
+                <div class="logo-container">  
+                    <span class="logo-text">DUNJANE<img src="img/GOLD DUNJANE LOGO with hologram.svg" alt="DUNJANE.TECH" class="logo-img">TECH</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="store.html" class="nav-link section-active">Store</a>
+                <a href="studio.html" class="nav-link">Studio</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-right">
+                <a href="#" class="nav-cart" aria-label="Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="store-hero">
+        <div class="section-container">
+            <h1 class="hero-title" data-anim="clip-up">The <span class="hero-title-accent">Hardware</span> Hub</h1>
+            <p class="section-sub" data-anim="fade-up" data-delay="2">Professional gear. Vetted quality. <br>New & pre-owned tech for the modern creator.</p>
+        </div>
+    </section>
+
+    <div class="filter-bar">
+        <div class="filter-inner">
+            <span style="font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em;">Filter</span>
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="laptop">Laptops</button>
+                <button class="filter-btn" data-filter="phone">Phones</button>
+                <button class="filter-btn" data-filter="tablet">Tablets</button>
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-cond="all">All Conditions</button>
+                <button class="filter-btn" data-cond="new">New</button>
+                <button class="filter-btn" data-cond="pre-owned">Pre-owned</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="store-grid-wrap">
+        <div class="section-container">
+            
+            <!-- Laptops -->
+            <div class="category-group" id="cat-laptop">
+                <span class="category-label" data-anim="fade-left">/ LAPTOPS</span>
+                <div class="product-grid">
+                    <article class="product-card" data-category="laptop" data-condition="pre-owned">
+                        <div class="card-overlay"></div>
+                        <div class="product-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=900" alt="MacBook Pro" class="product-img">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="tag tag-condition">Pre-owned</span>
+                                <span class="tag-category">MacBook</span>
+                            </div>
+                            <h3>MacBook Pro M2 Pro</h3>
+                            <p class="card-desc">16" · 32GB · 1TB · Space Grey</p>
+                            <div class="card-footer">
+                                <span class="price">$1,299</span>
+                                <a href="#" class="card-cta">Add to Cart</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card" data-category="laptop" data-condition="new">
+                        <div class="card-overlay"></div>
+                        <div class="product-img-wrap">
+                            <img src="/C:/Users/My PC/.gemini/antigravity/brain/02f70454-7549-4a3b-9be2-95800018cb56/laptop_render_new_1773314683651.png" alt="Dell XPS" class="product-img">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="tag tag-condition">New</span>
+                                <span class="tag-category">Windows</span>
+                            </div>
+                            <h3>Dell XPS 15 2026</h3>
+                            <p class="card-desc">OLED · i9 · 32GB · 1TB</p>
+                            <div class="card-footer">
+                                <span class="price">$1,899</span>
+                                <a href="#" class="card-cta">Add to Cart</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card" data-category="laptop" data-condition="pre-owned">
+                        <div class="card-overlay"></div>
+                        <div class="product-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&q=80&w=900" alt="ThinkPad" class="product-img">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="tag tag-condition">Pre-owned</span>
+                                <span class="tag-category">Windows</span>
+                            </div>
+                            <h3>ThinkPad X1 Carbon</h3>
+                            <p class="card-desc">14" · Gen 10 · i7 · 16GB</p>
+                            <div class="card-footer">
+                                <span class="price">$799</span>
+                                <a href="#" class="card-cta">Add to Cart</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Phones -->
+            <div class="category-group" id="cat-phone" style="margin-top: 80px;">
+                <span class="category-label" data-anim="fade-left">/ PHONES</span>
+                <div class="product-grid">
+                    <article class="product-card" data-category="phone" data-condition="new">
+                        <div class="card-overlay"></div>
+                        <div class="product-img-wrap">
+                            <img src="/C:/Users/My PC/.gemini/antigravity/brain/02f70454-7549-4a3b-9be2-95800018cb56/phone_render_new_1773314700684.png" alt="iPhone 16" class="product-img">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="tag tag-condition">New</span>
+                                <span class="tag-category">iPhone</span>
+                            </div>
+                            <h3>iPhone 16 Pro Max</h3>
+                            <p class="card-desc">256GB · Desert Titanium</p>
+                            <div class="card-footer">
+                                <span class="price">$1,199</span>
+                                <a href="#" class="card-cta">Add to Cart</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card" data-category="phone" data-condition="pre-owned">
+                        <div class="card-overlay"></div>
+                        <div class="product-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1512054502232-10a0a035d672?auto=format&fit=crop&q=80&w=900" alt="Pixel" class="product-img">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="tag tag-condition">Pre-owned</span>
+                                <span class="tag-category">Android</span>
+                            </div>
+                            <h3>Google Pixel 8a</h3>
+                            <p class="card-desc">128GB · Mint · Excellent</p>
+                            <div class="card-footer">
+                                <span class="price">$399</span>
+                                <a href="#" class="card-cta">Add to Cart</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Tablets -->
+            <div class="category-group" id="cat-tablet" style="margin-top: 80px;">
+                <span class="category-label" data-anim="fade-left">/ TABLETS (NEW ONLY)</span>
+                <div class="product-grid">
+                    <article class="product-card" data-category="tablet" data-condition="new">
+                        <div class="card-overlay"></div>
+                        <div class="product-img-wrap">
+                            <img src="/C:/Users/My PC/.gemini/antigravity/brain/02f70454-7549-4a3b-9be2-95800018cb56/tablet_render_new_1773314721178.png" alt="iPad Pro" class="product-img">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="tag tag-condition">New</span>
+                                <span class="tag-category">Tablet</span>
+                            </div>
+                            <h3>iPad Pro 13" M4</h3>
+                            <p class="card-desc">Nano-texture · 512GB · Cellular</p>
+                            <div class="card-footer">
+                                <span class="price">$1,299</span>
+                                <a href="#" class="card-cta">Add to Cart</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-bottom">
+                <p class="footer-copy">© 2026 DUNJANE TECH. ALL HARDWARE VETTED.</p>
+                <div class="footer-socials">
+                    <a href="#">TW</a><a href="#">IG</a><a href="#">LI</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Toast -->
+    <div class="cart-toast" id="cart-toast">
+        <span class="toast-icon">✓</span>
+        <span id="toast-msg">Item added to cart!</span>
+    </div>
+
+    <!-- Script same as index but with filter logic -->
+    <script>
+    (function initStore() {
+        // Animation engine
+        var lastY = window.scrollY, dir = 'down';
+        window.addEventListener('scroll', function() {
+            var curr = window.scrollY;
+            if (Math.abs(curr - lastY) < 5) return;
+            dir = curr > lastY ? 'down' : 'up';
+            lastY = curr;
+            document.body.setAttribute('data-scroll-dir', dir);
+        }, { passive: true });
+
+        var animObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    entry.target.setAttribute('data-scroll-entry', dir);
+                } else {
+                    var rect = entry.boundingClientRect;
+                    if (rect.top > window.innerHeight || rect.bottom < 0) entry.target.classList.remove('in-view');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+
+        function refreshObservers() {
+            document.querySelectorAll('[data-anim], .product-card').forEach(function(el) {
+                if (!el.hasAttribute('data-anim')) el.setAttribute('data-anim', 'scale-up');
+                animObserver.observe(el);
+            });
+        }
+        refreshObservers();
+
+        // Cursor
+        var dot = document.getElementById('cursor-dot'), ring = document.getElementById('cursor-ring');
+        if (dot && ring && window.matchMedia('(pointer:fine)').matches) {
+            var mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+            function lerp() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(lerp); }
+            lerp();
+            document.querySelectorAll('a, button, .product-card').forEach(function(el) {
+                el.addEventListener('mouseenter', function() { ring.style.width = '56px'; ring.style.height = '56px'; dot.style.opacity = '0'; });
+                el.addEventListener('mouseleave', function() { ring.style.width = '36px'; ring.style.height = '36px'; dot.style.opacity = '1'; });
+            });
+        }
+
+        // Filtering Logic
+        var activeCat = 'all', activeCond = 'all';
+        var cards = document.querySelectorAll('.product-card');
+        var catBtns = document.querySelectorAll('[data-filter]');
+        var condBtns = document.querySelectorAll('[data-cond]');
+
+        function filter() {
+            cards.forEach(function(card) {
+                var cCat = card.getAttribute('data-category');
+                var cCond = card.getAttribute('data-condition');
+                var matchCat = activeCat === 'all' || activeCat === cCat;
+                var matchCond = activeCond === 'all' || activeCond === cCond;
+                
+                card.style.display = (matchCat && matchCond) ? 'block' : 'none';
+                
+                // toggle category headers
+                document.querySelectorAll('.category-group').forEach(function(group) {
+                    var hasVisible = group.querySelectorAll('.product-card[style="display: block;"]').length > 0;
+                    group.style.display = hasVisible ? 'block' : 'none';
+                });
+            });
+        }
+
+        catBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                catBtns.forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                activeCat = btn.getAttribute('data-filter');
+                filter();
+            });
+        });
+
+        condBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                condBtns.forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                activeCond = btn.getAttribute('data-cond');
+                filter();
+            });
+        });
+
+        // 3D Tilt
+        document.querySelectorAll('.product-card').forEach(function(card) {
+            card.addEventListener('mousemove', function(e) {
+                var r = card.getBoundingClientRect();
+                var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+                card.classList.add('tilting');
+                card.style.transform = 'perspective(800px) rotateX(' + (-y * 10) + 'deg) rotateY(' + (x * 10) + 'deg) translateY(-8px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', function() { card.classList.remove('tilting'); card.style.transform = ''; });
+        });
+
+        // Cart
+        var count = 0, countEl = document.querySelector('.cart-count'), toast = document.getElementById('cart-toast');
+        document.querySelectorAll('.card-cta').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                count++; countEl.textContent = count; countEl.classList.add('visible');
+                toast.classList.add('show'); setTimeout(function() { toast.classList.remove('show'); }, 2000);
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

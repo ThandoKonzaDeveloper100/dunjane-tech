@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUNJANE TECH | Premium Tech & Digital Studio</title>
+    <meta name="description"
+        content="New & pre-owned laptops and phones, plus visual design, mobile app, and web development services for businesses.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,600;0,14..32,800;0,14..32,900;1,14..32,300&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════
+         FLASH LOADING SCREEN
+    ═══════════════════════════════════════════════════════ -->
+    <div id="flash-loader" aria-hidden="true">
+
+        <!-- Particle canvas -->
+        <canvas id="loader-particles"></canvas>
+
+        <!-- Animated orbit rings -->
+        <div class="loader-orb-wrap">
+            <div class="loader-orb orb-1"></div>
+            <div class="loader-orb orb-2"></div>
+            <div class="loader-orb orb-3"></div>
+            <div class="loader-core">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <polygon points="24,4 44,14 44,34 24,44 4,34 4,14" stroke="url(#hex-grad)" stroke-width="1.5" fill="none"/>
+                    <polygon points="24,10 38,18 38,30 24,38 10,30 10,18" stroke="url(#hex-grad)" stroke-width="1" fill="none" opacity="0.4"/>
+                    <circle cx="24" cy="24" r="4" fill="url(#hex-grad)"/>
+                    <defs>
+                        <linearGradient id="hex-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#a78bfa"/>
+                            <stop offset="100%" stop-color="#38bdf8"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Brand wordmark -->
+        <div class="loader-brand">
+            <span class="loader-brand-name" id="loader-letters">
+                <span class="ll">D</span><span class="ll">U</span><span class="ll">N</span><span class="ll">J</span><span class="ll">A</span><span class="ll">N</span><span class="ll">E</span>
+                <span class="loader-dot">.</span>
+                <span class="ll">T</span><span class="ll">E</span><span class="ll">C</span><span class="ll">H</span>
+            </span>
+            <span class="loader-tagline">Premium Tech &amp; Digital Studio</span>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="loader-progress-wrap">
+            <div class="loader-progress-bar" id="loader-bar"></div>
+            <span class="loader-pct" id="loader-pct">0%</span>
+        </div>
+
+        <!-- Flash wipe panels (used on exit) -->
+        <div class="flash-panel flash-left"></div>
+        <div class="flash-panel flash-right"></div>
+    </div>
+    <!-- /FLASH LOADING SCREEN -->
+
+    <!-- Cursor elements -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="nav-inner">
+            <a href="#" class="logo-link">
+                <div class="logo-container">  
+                    <span class="logo-text">DUNJANE<img src="img/GOLD DUNJANE LOGO with hologram.svg" alt="DUNJANE.TECH" class="logo-img">TECH</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="store.html" class="nav-link">Store</a>
+                <a href="studio.html" class="nav-link">Studio</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-right">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="#" class="nav-cart" id="cart-btn" aria-label="Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="#shop" class="btn-nav">Shop Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-grid"></div>
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="hero-badge animate-in">
+                    <span class="badge-dot"></span>
+                    TRUSTED BY 1,200+ CLIENTS
+                </div>
+                <h1 class="hero-title animate-in delay-1" id="typing-title" data-text="Built for&#10;Creators&#10;Who Mean It.">
+                </h1>
+                <p class="hero-sub animate-in delay-2">Premium new &amp; pre-owned laptops and phones. <br>We also build
+                    the digital tools behind your brand.</p>
+                <div class="hero-actions animate-in delay-3">
+                    <a href="store.html" class="btn-primary">
+                        Explore Hardware
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                    <a href="studio.html" class="btn-ghost">View Studio Services</a>
+                </div>
+                <div class="hero-stats animate-in delay-4">
+                    <div class="stat">
+                        <span class="stat-num">500+</span>
+                        <span class="stat-lbl">Devices In Stock</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-num">5★</span>
+                        <span class="stat-lbl">Avg Rating</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-num">3yr</span>
+                        <span class="stat-lbl">Warranty</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual animate-in delay-2">
+                <div class="spline-wrap">
+                    <div class="spline-glow"></div>
+                    <canvas id="canvas3d"></canvas>
+                    <div class="spline-loader" id="spline-loader">
+                        <div class="loader-ring"></div>
+                        <span>Loading 3D Scene…</span>
+                    </div>
+                </div>
+                <div class="hero-floating-card">
+                    <div class="fc-icon">✦</div>
+                    <div class="fc-text">
+                        <span class="fc-label">Just Arrived</span>
+                        <span class="fc-value">MacBook Pro M4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-hint">
+            <div class="scroll-line"></div>
+            <span>scroll</span>
+        </div>
+    </section>
+
+    <!-- Marquee Ticker -->
+    <div class="ticker-wrap" aria-hidden="true">
+        <div class="ticker-track">
+            <span>New Arrivals</span><span class="ticker-dot">✦</span>
+            <span>MacBook Pro M4</span><span class="ticker-dot">✦</span>
+            <span>iPhone 16 Pro</span><span class="ticker-dot">✦</span>
+            <span>Samsung Galaxy S25</span><span class="ticker-dot">✦</span>
+            <span>Surface Pro 11</span><span class="ticker-dot">✦</span>
+            <span>Dell XPS 15</span><span class="ticker-dot">✦</span>
+            <span>Visual Design</span><span class="ticker-dot">✦</span>
+            <span>Mobile Apps</span><span class="ticker-dot">✦</span>
+            <span>Web Experiences</span><span class="ticker-dot">✦</span>
+            <!-- duplicate for seamless loop -->
+            <span>New Arrivals</span><span class="ticker-dot">✦</span>
+            <span>MacBook Pro M4</span><span class="ticker-dot">✦</span>
+            <span>iPhone 16 Pro</span><span class="ticker-dot">✦</span>
+            <span>Samsung Galaxy S25</span><span class="ticker-dot">✦</span>
+            <span>Surface Pro 11</span><span class="ticker-dot">✦</span>
+            <span>Dell XPS 15</span><span class="ticker-dot">✦</span>
+            <span>Visual Design</span><span class="ticker-dot">✦</span>
+            <span>Mobile Apps</span><span class="ticker-dot">✦</span>
+            <span>Web Experiences</span><span class="ticker-dot">✦</span>
+        </div>
+    </div>
+
+    <!-- Laptops Section -->
+    <section class="shop-section" id="shop">
+        <div class="section-container">
+            <header class="section-head">
+                <div class="section-label" data-anim="fade-left">/ LAPTOPS</div>
+                <h2 class="section-title" data-anim="fade-up" data-delay="2">Powerhouse<br><span class="accent-text">Machines</span></h2>
+                <a href="#" class="see-all" data-anim="fade-right">View All →</a>
+            </header>
+            <div class="product-grid">
+                <article class="product-card featured-card" data-category="Pre-owned">
+                    <div class="card-overlay"></div>
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=900"
+                            alt="MacBook Pro" class="product-img" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-preowned">Pre-owned</span>
+                            <span class="tag-category">Laptop</span>
+                        </div>
+                        <h3>MacBook Pro M2 Pro</h3>
+                        <p class="card-desc">16" · 32GB RAM · 1TB SSD · Space Grey</p>
+                        <div class="card-footer">
+                            <span class="price">$1,299</span>
+                            <a href="#" class="card-cta" id="macbook-cta">Add to Cart</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-category="New">
+                    <div class="card-overlay"></div>
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&q=80&w=900"
+                            alt="Dell XPS 15" class="product-img" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-new">New</span>
+                            <span class="tag-category">Laptop</span>
+                        </div>
+                        <h3>Dell XPS 15</h3>
+                        <p class="card-desc">OLED · Intel i9 · 32GB · 2TB NVME</p>
+                        <div class="card-footer">
+                            <span class="price">$1,799</span>
+                            <a href="#" class="card-cta" id="dell-cta">Add to Cart</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-category="Pre-owned">
+                    <div class="card-overlay"></div>
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&q=80&w=900"
+                            alt="ThinkPad X1 Carbon" class="product-img" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-preowned">Pre-owned</span>
+                            <span class="tag-category">Laptop</span>
+                        </div>
+                        <h3>ThinkPad X1 Carbon</h3>
+                        <p class="card-desc">14" FHD · i7 · 16GB · 512GB · Ultra-light</p>
+                        <div class="card-footer">
+                            <span class="price">$849</span>
+                            <a href="#" class="card-cta" id="thinkpad-cta">Add to Cart</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phones Section -->
+    <section class="shop-section phones-section" id="phones">
+        <div class="section-container">
+            <header class="section-head">
+                <div class="section-label" data-anim="fade-left">/ PHONES</div>
+                <h2 class="section-title" data-anim="fade-up" data-delay="2">Always<br><span class="accent-text">Connected</span></h2>
+                <a href="#" class="see-all" data-anim="fade-right">View All →</a>
+            </header>
+            <div class="product-grid product-grid--phones">
+                <article class="product-card" data-category="New">
+                    <div class="card-overlay"></div>
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=900"
+                            alt="iPhone 16 Pro" class="product-img" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-new">New</span>
+                            <span class="tag-category">iPhone</span>
+                        </div>
+                        <h3>iPhone 16 Pro</h3>
+                        <p class="card-desc">256GB · Desert Titanium · A18 Pro Chip</p>
+                        <div class="card-footer">
+                            <span class="price">$1,099</span>
+                            <a href="#" class="card-cta" id="iphone-cta">Add to Cart</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-category="New">
+                    <div class="card-overlay"></div>
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&q=80&w=900"
+                            alt="Samsung S25 Ultra" class="product-img" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-new">New</span>
+                            <span class="tag-category">Android</span>
+                        </div>
+                        <h3>Samsung S25 Ultra</h3>
+                        <p class="card-desc">512GB · Titanium Black · S-Pen Included</p>
+                        <div class="card-footer">
+                            <span class="price">$1,299</span>
+                            <a href="#" class="card-cta" id="samsung-cta">Add to Cart</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-category="Pre-owned">
+                    <div class="card-overlay"></div>
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1512054502232-10a0a035d672?auto=format&fit=crop&q=80&w=900"
+                            alt="Google Pixel 8a" class="product-img" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-preowned">Pre-owned</span>
+                            <span class="tag-category">Android</span>
+                        </div>
+                        <h3>Google Pixel 8a</h3>
+                        <p class="card-desc">128GB · Perfectly maintained · Aloe</p>
+                        <div class="card-footer">
+                            <span class="price">$449</span>
+                            <a href="#" class="card-cta" id="pixel-cta">Add to Cart</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-category="Pre-owned">
+                    <div class="card-overlay"></div>
+                    <div class="product-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&q=80&w=900"
+                            alt="iPhone 14 Pre-owned" class="product-img" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="tag tag-preowned">Pre-owned</span>
+                            <span class="tag-category">iPhone</span>
+                        </div>
+                        <h3>iPhone 14 Pro</h3>
+                        <p class="card-desc">128GB · Deep Purple · Grade A Condition</p>
+                        <div class="card-footer">
+                            <span class="price">$699</span>
+                            <a href="#" class="card-cta" id="iphone14-cta">Add to Cart</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Band -->
+    <div class="trust-band">
+        <div class="trust-inner">
+            <div class="trust-item">
+                <span class="trust-icon">🛡️</span>
+                <div>
+                    <strong>3-Year Warranty</strong>
+                    <span>On all pre-owned devices</span>
+                </div>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+                <span class="trust-icon">🚀</span>
+                <div>
+                    <strong>Same-Day Delivery</strong>
+                    <span>In Johannesburg & Cape Town</span>
+                </div>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+                <span class="trust-icon">🔄</span>
+                <div>
+                    <strong>30-Day Returns</strong>
+                    <span>No questions asked</span>
+                </div>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+                <span class="trust-icon">🔒</span>
+                <div>
+                    <strong>Secure Checkout</strong>
+                    <span>SSL encrypted payments</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="section-container">
+            <header class="section-head centered">
+                <div class="section-label" data-anim="fade-up">/ DIGITAL STUDIO</div>
+                <h2 class="section-title" data-anim="clip-up" data-delay="2">We Build Your<br><span class="accent-text">Digital Presence</span></h2>
+                <p class="section-sub" data-anim="fade-up" data-delay="3">From branding to shipping apps — we are your end-to-end creative technology
+                    partner.</p>
+            </header>
+            <div class="services-bento">
+                <div class="service-card service-card--web reveal">
+                    <div class="service-number">01</div>
+                    <div class="service-body">
+                        <div class="service-icon-wrap">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                            </svg>
+                        </div>
+                        <h3>Web Development</h3>
+                        <p>Blazing-fast, SEO-optimised websites and web apps built for conversion and scale.</p>
+                        <a href="#contact" class="service-link">Get a quote →</a>
+                    </div>
+                    <div class="service-bg-label">WEB</div>
+                </div>
+                <div class="service-card service-card--app reveal">
+                    <div class="service-number">02</div>
+                    <div class="service-body">
+                        <div class="service-icon-wrap">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                                <line x1="12" y1="18" x2="12.01" y2="18" />
+                            </svg>
+                        </div>
+                        <h3>Mobile Apps</h3>
+                        <p>Native iOS & Android apps and polished cross-platform experiences with React Native &
+                            Flutter.</p>
+                        <a href="#contact" class="service-link">Get a quote →</a>
+                    </div>
+                    <div class="service-bg-label">APP</div>
+                </div>
+                <div class="service-card service-card--design reveal">
+                    <div class="service-number">03</div>
+                    <div class="service-body">
+                        <div class="service-icon-wrap">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            </svg>
+                        </div>
+                        <h3>Visual Design</h3>
+                        <p>Brand identity, UI/UX systems, pitch decks and marketing graphics that stop the scroll.</p>
+                        <a href="#contact" class="service-link">Get a quote →</a>
+                    </div>
+                    <div class="service-bg-label">DSGN</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Band -->
+    <section class="cta-section" id="contact">
+        <div class="cta-inner">
+            <div class="cta-glow"></div>
+            <span class="section-label" data-anim="fade-up">/ GET IN TOUCH</span>
+            <h2 class="cta-title" data-anim="clip-up" data-delay="2">Ready to build<br>something great?</h2>
+            
+            <form class="contact-form" id="lead-form" data-anim="fade-up" data-delay="3">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group full">
+                        <select name="interest">
+                            <option value="Studio Project">Digital Studio Project</option>
+                            <option value="Hardware Inquiry">Hardware Inquiry</option>
+                            <option value="Other">General Inquiry</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <textarea name="message" placeholder="Tell us about your project..." rows="4" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary btn-large" style="width: 100%; justify-content: center;">
+                    Submit Inquiry
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="logo">DUNJANE<span class="accent-dot">.</span>TECH</div>
+                    <p>Premium tech. Digital studio. All in one place.</p>
+                </div>
+                <nav class="footer-nav">
+                    <div class="footer-col">
+                        <strong>Shop</strong>
+                        <a href="store.html?filter=laptop">Laptops</a>
+                        <a href="store.html?filter=phone">Phones</a>
+                        <a href="store.html?cond=pre-owned">Pre-Owned</a>
+                        <a href="store.html">New Arrivals</a>
+                    </div>
+                    <div class="footer-col">
+                        <strong>Studio</strong>
+                        <a href="#services">Web Dev</a>
+                        <a href="#services">Mobile Apps</a>
+                        <a href="#services">Visual Design</a>
+                    </div>
+                    <div class="footer-col">
+                        <strong>Company</strong>
+                        <a href="#">About</a>
+                        <a href="#">Blog</a>
+                        <a href="crm.html" style="opacity: 0.5; font-size: 0.8em;">Internal CRM</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p class="footer-copy">© 2026 DUNJANE TECH. ALL WORK &amp; NO PLAY.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Twitter">TW</a>
+                    <a href="#" aria-label="Instagram">IG</a>
+                    <a href="#" aria-label="LinkedIn">LI</a>
+                    <a href="#" aria-label="Dribbble">DR</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Toast -->
+    <div class="cart-toast" id="cart-toast">
+        <span class="toast-icon">✓</span>
+        <span id="toast-msg">Item added to cart!</span>
+    </div>
+
+    <script>
+    // ══════════════════════════════════════════════════════════════
+    //  FLASH LOADING SCREEN (inline - runs without CORS restriction)
+    // ══════════════════════════════════════════════════════════════
+    (function initFlashLoader() {
+        var loaderEl = document.getElementById('flash-loader');
+        var barEl    = document.getElementById('loader-bar');
+        var pctEl    = document.getElementById('loader-pct');
+        var cvs      = document.getElementById('loader-particles');
+        if (!loaderEl || !cvs) return;
+
+        document.body.classList.add('loading');
+
+        // ── Particle canvas ──────────────────────────────────────
+        var ctx = cvs.getContext('2d');
+        var particles = [];
+        var rafId;
+
+        function resize() { cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+        resize();
+        window.addEventListener('resize', resize);
+
+        function rnd(a, b) { return a + Math.random() * (b - a); }
+
+        function spawn() {
+            return { x: rnd(0, cvs.width), y: rnd(0, cvs.height),
+                     r: rnd(0.5, 2.2), vx: rnd(-0.3, 0.3), vy: rnd(-0.5, -0.1),
+                     life: 1, decay: rnd(0.003, 0.008),
+                     hue: [180, 270, 60][Math.floor(Math.random() * 3)] };
+        }
+
+        for (var i = 0; i < 80; i++) { var p = spawn(); p.life = Math.random(); particles.push(p); }
+
+        function drawP() {
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+            for (var i = 0; i < particles.length; i++) {
+                var p = particles[i];
+                p.x += p.vx; p.y += p.vy; p.life -= p.decay;
+                if (p.life <= 0) { particles[i] = spawn(); continue; }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'hsla(' + p.hue + ',100%,70%,' + (p.life * 0.7) + ')';
+                ctx.fill();
+            }
+            rafId = requestAnimationFrame(drawP);
+        }
+        drawP();
+
+        // ── Progress ─────────────────────────────────────────────
+        var progress = 0;
+        var phases = [
+            { target: 30,  duration: 400 },
+            { target: 65,  duration: 600 },
+            { target: 88,  duration: 800 },
+            { target: 100, duration: 300 }
+        ];
+
+        function animProg(from, to, dur, done) {
+            var start = performance.now();
+            function step(now) {
+                var t = Math.min((now - start) / dur, 1);
+                var e = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+                progress = Math.round(from + (to - from) * e);
+                barEl.style.width = progress + '%';
+                pctEl.textContent = progress + '%';
+                if (t < 1) requestAnimationFrame(step);
+                else done && done();
+            }
+            requestAnimationFrame(step);
+        }
+
+        function runPhases(i) {
+            if (i >= phases.length) return;
+            animProg(progress, phases[i].target, phases[i].duration, function() { runPhases(i + 1); });
+        }
+
+        setTimeout(function() { runPhases(0); }, 900);
+
+        // ── Exit ─────────────────────────────────────────────────
+        function dismiss() {
+            cancelAnimationFrame(rafId);
+            loaderEl.classList.add('exit-flash');
+            setTimeout(function() {
+                loaderEl.classList.add('exit-gone');
+                document.body.classList.remove('loading');
+                setTimeout(function() {
+                    loaderEl.style.display = 'none';
+                }, 300);
+            }, 180);
+        }
+
+        var MIN_TIME  = 2800;
+        var startTime = Date.now();
+
+        function maybeExit() {
+            var wait = Math.max(0, MIN_TIME - (Date.now() - startTime));
+            setTimeout(dismiss, wait);
+        }
+
+        var iv = setInterval(function() {
+            if (progress >= 100) { clearInterval(iv); maybeExit(); }
+        }, 50);
+
+        setTimeout(function() { clearInterval(iv); dismiss(); }, 5000);
+    })();
+
+    // ══════════════════════════════════════════════════════════════
+    //  INTERACTIVE ENGINE & TRANSITIONS
+    // ══════════════════════════════════════════════════════════════
+    (function initApp() {
+        // ── 0. Typing Animation for Hero Title ────────────────────
+        function initTypingAnimation() {
+            var titleEl = document.getElementById('typing-title');
+            if (!titleEl) return;
+            
+            var fullText = 'Built for\nCreators\nWho Mean It.';
+            var accentWord = 'Creators';
+            var typingSpeed = 80;
+            var charIndex = 0;
+            var isTyping = false;
+            var isVisible = false;
+            var typingTimeout;
+            var resetInterval;
+            
+            function typeCharacter() {
+                if (charIndex <= fullText.length) {
+                    var displayText = fullText.substring(0, charIndex);
+                    
+                    // Replace newlines with <br> and wrap accent word
+                    var html = displayText
+                        .split('\n')
+                        .map(function(line) {
+                            return line.replace(accentWord, '<span class="hero-title-accent">' + accentWord + '</span>');
+                        })
+                        .join('<br>');
+                    
+                    // Add cursor
+                    titleEl.innerHTML = html + '<span class="typing-cursor"></span>';
+                    
+                    charIndex++;
+                    typingTimeout = setTimeout(typeCharacter, typingSpeed);
+                } else {
+                    // Remove cursor when done
+                    var cursor = titleEl.querySelector('.typing-cursor');
+                    if (cursor) cursor.remove();
+                }
+            }
+            
+            function startTyping() {
+                isTyping = true;
+                titleEl.classList.add('typing-active');
+                charIndex = 0;
+                typeCharacter();
+            }
+            
+            function resetAndType() {
+                if (isVisible) {
+                    // Clear any pending timeouts
+                    clearTimeout(typingTimeout);
+                    // Reset and restart typing
+                    startTyping();
+                }
+            }
+            
+            // Start typing when element comes into view
+            var typingObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    isVisible = entry.isIntersecting;
+                    
+                    if (entry.isIntersecting && !isTyping) {
+                        startTyping();
+                        
+                        // Set up interval to reset typing every 30 seconds
+                        if (!resetInterval) {
+                            resetInterval = setInterval(resetAndType, 30000);
+                        }
+                    } else if (!entry.isIntersecting && resetInterval) {
+                        // Stop interval when element leaves view
+                        clearInterval(resetInterval);
+                        resetInterval = null;
+                        clearTimeout(typingTimeout);
+                        isTyping = false;
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            typingObserver.observe(titleEl);
+        }
+        
+        initTypingAnimation();
+
+        // ── 1. Apply Dynamic Attributes First ─────────────────────
+        // Ensure all cards and sections have their anim attributes before observing
+        document.querySelectorAll('.product-grid').forEach(function(grid) {
+            grid.querySelectorAll('.product-card').forEach(function(card, i) {
+                if (!card.hasAttribute('data-anim')) card.setAttribute('data-anim', 'scale-up');
+                card.setAttribute('data-delay', (i % 4) + 1);
+            });
+        });
+
+        document.querySelectorAll('.service-card').forEach(function(card, i) {
+            if (!card.hasAttribute('data-anim')) card.setAttribute('data-anim', 'scale-up');
+            card.setAttribute('data-delay', i + 1);
+        });
+
+        // ── Cart Setup (early for use in other functions) ────────
+        var cartCount = 0;
+        var cartCountEl = document.querySelector('.cart-count');
+        var toast = document.getElementById('cart-toast');
+        var toastMsg = document.getElementById('toast-msg');
+
+        function showToast(msg) {
+            if (!toastMsg || !toast) return;
+            toastMsg.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 1000);
+        }
+
+        // ── 2. Scroll Direction & State ───────────────────────────
+        var lastY = window.scrollY;
+        var dir = 'down';
+        window.addEventListener('scroll', function() {
+            var curr = window.scrollY;
+            if (Math.abs(curr - lastY) < 5) return;
+            dir = curr > lastY ? 'down' : 'up';
+            lastY = curr;
+            document.body.setAttribute('data-scroll-dir', dir);
+        }, { passive: true });
+
+        // ── 3. Animation Observer ─────────────────────────────────
+        var animObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    entry.target.setAttribute('data-scroll-entry', dir);
+                } else {
+                    // Remove in-view when clearly out to allow re-trigger
+                    var rect = entry.boundingClientRect;
+                    if (rect.top > window.innerHeight || rect.bottom < 0) {
+                        entry.target.classList.remove('in-view');
+                    }
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+
+        document.querySelectorAll('[data-anim], .section-label, .product-card, .service-card, .trust-item').forEach(function(el) {
+            animObserver.observe(el);
+        });
+
+        // ── 4. Header scroll ──────────────────────────────────────
+        var header = document.getElementById('header');
+        if (header) {
+            window.addEventListener('scroll', function() {
+                header.classList.toggle('scrolled', window.scrollY > 40);
+            }, { passive: true });
+        }
+
+        // ── Theme Toggle ──────────────────────────────────────────
+        var themeToggle = document.getElementById('theme-toggle');
+        var htmlEl = document.documentElement;
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var savedTheme = localStorage.getItem('dunjane-theme');
+        var currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        
+        function setTheme(theme) {
+            htmlEl.setAttribute('data-theme', theme);
+            localStorage.setItem('dunjane-theme', theme);
+            if (themeToggle) {
+                themeToggle.classList.toggle('light-mode', theme === 'light');
+            }
+        }
+        
+        setTheme(currentTheme);
+        
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                currentTheme = newTheme;
+                setTheme(newTheme);
+                themeToggle.classList.add('spin');
+                setTimeout(function() { themeToggle.classList.remove('spin'); }, 600);
+            });
+        }
+
+        // ── 5. Add to Cart Button Handlers ──────────────────────
+        document.querySelectorAll('.card-cta').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                cartCount++;
+                if (cartCountEl) {
+                    cartCountEl.textContent = cartCount;
+                    cartCountEl.classList.add('visible');
+                }
+                var h3 = btn.closest('.product-card').querySelector('h3');
+                showToast((h3 ? h3.textContent : 'Item') + ' added to cart!');
+            });
+        });
+
+        // ── 13. Load CRM Products ────────────────────────────────
+        var lastProductsHash = '';
+        
+        function loadCRMProducts() {
+            var crmProducts = JSON.parse(localStorage.getItem('dunjane_products')) || [];
+            if (crmProducts.length === 0) return;
+            
+            crmProducts.forEach(function(product) {
+                // Determine which grid to add to based on category
+                var gridSelector = '';
+                
+                if (product.category === 'Laptop') {
+                    gridSelector = '.shop-section:first-of-type .product-grid';
+                } else if (product.category === 'iPhone' || product.category === 'Android') {
+                    gridSelector = '.product-grid--phones';
+                }
+                
+                if (!gridSelector) return;
+                
+                var grid = document.querySelector(gridSelector);
+                if (!grid) return;
+                
+                // Check if product already exists
+                if (grid.querySelector('[data-crm-id="' + product.id + '"]')) return;
+                
+                // Determine condition badge appearance
+                var conditionClass = 'tag-new';
+                var conditionLabel = product.condition || 'New';
+                if (conditionLabel === 'Pre-owned') {
+                    conditionClass = 'tag-preowned';
+                } else if (conditionLabel === 'Refurbished') {
+                    conditionClass = 'tag-refurbished';
+                }
+                
+                // Create product card
+                var card = document.createElement('article');
+                card.className = 'product-card';
+                card.setAttribute('data-category', product.category);
+                card.setAttribute('data-crm-id', product.id);
+                card.innerHTML = '\
+                    <div class="card-overlay"></div>\
+                    <div class="product-img-wrap">\
+                        <img src="' + (product.image || 'https://via.placeholder.com/400x300?text=No+Image') + '" alt="' + product.name + '" class="product-img" loading="lazy">\
+                    </div>\
+                    <div class="card-body">\
+                        <div class="card-meta">\
+                            <span class="tag ' + conditionClass + '">' + conditionLabel + '</span>\
+                            <span class="tag-category">' + product.category + '</span>\
+                        </div>\
+                        <h3>' + product.name + '</h3>\
+                        <p class="card-desc">SKU: ' + product.sku + ' · Stock: ' + product.stock + '</p>\
+                        <div class="card-footer">\
+                            <span class="price">$' + parseFloat(product.price).toFixed(2) + '</span>\
+                            <a href="#" class="card-cta">Add to Cart</a>\
+                        </div>\
+                    </div>\
+                ';
+                
+                grid.appendChild(card);
+                
+                // Re-apply event listeners to new card
+                var cta = card.querySelector('.card-cta');
+                if (cta) {
+                    cta.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        cartCount++;
+                        if (cartCountEl) {
+                            cartCountEl.textContent = cartCount;
+                            cartCountEl.classList.add('visible');
+                        }
+                        showToast(product.name + ' added to cart!');
+                    });
+                }
+                
+                // Re-apply tilt effect
+                card.addEventListener('mousemove', function(e) {
+                    var r = card.getBoundingClientRect();
+                    var x = (e.clientX - r.left) / r.width - 0.5;
+                    var y = (e.clientY - r.top) / r.height - 0.5;
+                    card.classList.add('tilting');
+                    card.style.transform = 'perspective(800px) rotateX(' + (-y * 10) + 'deg) rotateY(' + (x * 10) + 'deg) translateY(-8px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() { card.classList.remove('tilting'); card.style.transform = ''; });
+            });
+        }
+        
+        // Load CRM products on page load
+        loadCRMProducts();
+        
+        // Listen for changes in localStorage from CRM
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'dunjane_products') {
+                loadCRMProducts();
+            }
+        });
+        
+        // Polling mechanism to detect same-tab updates from CRM
+        setInterval(function() {
+            var currentProducts = JSON.parse(localStorage.getItem('dunjane_products')) || [];
+            var currentHash = JSON.stringify(currentProducts);
+            if (currentHash !== lastProductsHash) {
+                lastProductsHash = currentHash;
+                // Clear and reload to ensure new products appear
+                var grids = document.querySelectorAll('.product-grid, .product-grid--phones');
+                var crmCards = [];
+                grids.forEach(function(grid) {
+                    grid.querySelectorAll('[data-crm-id]').forEach(function(card) {
+                        crmCards.push(card);
+                    });
+                });
+                crmCards.forEach(function(card) { card.remove(); });
+                loadCRMProducts();
+            }
+        }, 1000);
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                var href = anchor.getAttribute('href');
+                if (href === '#') return;
+                var target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ── 7. Hero Visual Parallax ───────────────────────────────
+        var heroVisual = document.querySelector('.hero-visual');
+        window.addEventListener('scroll', function() {
+            if (!heroVisual) return;
+            heroVisual.style.transform = 'translateY(' + (window.scrollY * 0.08) + 'px)';
+        }, { passive: true });
+
+        // ── 8. Custom Cursor ──────────────────────────────────────
+        var dot = document.getElementById('cursor-dot');
+        var ring = document.getElementById('cursor-ring');
+        if (dot && ring && window.matchMedia('(pointer:fine)').matches) {
+            var mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
+            function lerp() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(lerp); }
+            lerp();
+            document.querySelectorAll('a, button, .card-cta, .product-card').forEach(function(el) {
+                el.addEventListener('mouseenter', function() { 
+                    ring.style.width = '56px'; ring.style.height = '56px'; 
+                    ring.style.borderColor = 'rgba(212,255,0,0.7)'; dot.style.opacity = '0'; 
+                });
+                el.addEventListener('mouseleave', function() { 
+                    ring.style.width = '36px'; ring.style.height = '36px'; 
+                    ring.style.borderColor = 'rgba(212,255,0,0.45)'; dot.style.opacity = '1'; 
+                });
+            });
+        }
+
+        // ── 9. Ripple ─────────────────────────────────────────────
+        document.querySelectorAll('.btn-primary, .btn-ghost, .btn-nav, .card-cta').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                this.classList.remove('ripple');
+                void this.offsetWidth;
+                this.classList.add('ripple');
+            });
+        });
+
+        // ── 10. 3D Tilt ───────────────────────────────────────────
+        document.querySelectorAll('.product-card').forEach(function(card) {
+            card.addEventListener('mousemove', function(e) {
+                var r = card.getBoundingClientRect();
+                var x = (e.clientX - r.left) / r.width - 0.5;
+                var y = (e.clientY - r.top) / r.height - 0.5;
+                card.classList.add('tilting');
+                card.style.transform = 'perspective(800px) rotateX(' + (-y * 10) + 'deg) rotateY(' + (x * 10) + 'deg) translateY(-8px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', function() { card.classList.remove('tilting'); card.style.transform = ''; });
+        });
+
+        // ── 1Nav Highlight ───────────────────────────────────────
+        var sections = document.querySelectorAll('section[id], .shop-section[id]');
+        var links = document.querySelectorAll('.nav-link');
+        var secObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting) {
+                    links.forEach(function(l) { l.classList.toggle('section-active', l.getAttribute('href') === '#' + e.target.id); });
+                }
+            });
+        }, { threshold: 0.4 });
+        sections.forEach(function(s) { secObs.observe(s); });
+
+        // ── 12. Counters ──────────────────────────────────────────
+        function count(el, target, suffix) {
+            var start = performance.now();
+            function tick(now) {
+                var t = Math.min((now - start) / 1400, 1);
+                var v = Math.round((1 - Math.pow(1 - t, 3)) * target);
+                el.textContent = v + suffix;
+                if (t < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+        var statNums = document.querySelectorAll('.stat-num');
+        var statObs = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting) {
+                statObs.disconnect();
+                if (statNums[0]) setTimeout(function() { count(statNums[0], 500, '+'); }, 0);
+                if (statNums[1]) setTimeout(function() { count(statNums[1], 5, '★'); }, 200);
+                if (statNums[2]) setTimeout(function() { count(statNums[2], 3, 'yr'); }, 400);
+            }
+        }, { threshold: 0.5 });
+        if (statNums.length) statObs.observe(statNums[0]);
+
+        // ── 13. CRM Lead Capture ──────────────────────────────────
+        var leadForm = document.getElementById('lead-form');
+        if (leadForm) {
+            leadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var fd = new FormData(leadForm);
+                var lead = {
+                    id: Date.now(),
+                    name: fd.get('name'),
+                    email: fd.get('email'),
+                    category: fd.get('interest'),
+                    status: 'lead',
+                    val: '-',
+                    date: 'Just now',
+                    msg: fd.get('message')
+                };
+                
+                // Persistence
+                var data = JSON.parse(localStorage.getItem('dunjane_crm_data')) || [];
+                data.unshift(lead);
+                localStorage.setItem('dunjane_crm_data', JSON.stringify(data));
+                
+                // Feedback
+                leadForm.style.opacity = '0.3';
+                leadForm.style.pointerEvents = 'none';
+                showToast('Inquiry sent! Our team will contact you soon.');
+                leadForm.reset();
+                setTimeout(function() { 
+                    leadForm.style.opacity = '1'; 
+                    leadForm.style.pointerEvents = 'all'; 
+                }, 3000);
+            });
+        }
+    })();
+    </script>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
